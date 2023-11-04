@@ -8,9 +8,9 @@ scikit_learn>=1.0
 termcolor
 GPUtil
 soundfile
-torch>=1.12
-torchvision
-torchaudio
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
 torchcrepe
 tensorboard
 pytorch_lightning==1.6
