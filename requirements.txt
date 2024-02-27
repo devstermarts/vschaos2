@@ -12,11 +12,11 @@ torch==2.0.1
 torchvision==0.15.2
 torchaudio==2.0.2
 torchcrepe
-tensorboard
+tensorboard==2.15.1
 pytorch_lightning==1.6
 hydra-core==1.2
-cached-conv>=2.5.0
+cached-conv==2.5.0
+nn-tilde
 git+https://github.com/domkirke/acids_transforms.git
 git+https://github.com/domkirke/lardon.git
-git+https://github.com/acids-ircam/nn_tilde.git@feature/attributes
 git+https://github.com/domkirke/trajectories.git@master
