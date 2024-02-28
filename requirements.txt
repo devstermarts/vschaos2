@@ -1,6 +1,6 @@
 setuptools==59.5.0
 tqdm
-dill==0.3.7
+dill
 numpy>=1.21
 matplotlib>=3.5
 scipy>=1.7
