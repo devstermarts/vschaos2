@@ -34,8 +34,8 @@ class AudioReconstructionMonitor(Callback):
     def __init__(self, plot_reconstructions:bool = True, plot_samples: bool = True, has_seq: bool = False,
                  generate_files: bool = True, generate_samples: bool = False, generate_trajs: bool = True,
                  n_reconstructions: int = 5, n_samples: int = 5, n_files: int  = 3, files_path: str = None,
-                 temperature_range: Iterable[float]=None, monitor_epochs: int = 1, reconstruction_epochs: int = 5, 
-                 sample_reconstruction: bool = False, traj_file: str = None, traj_sr: int = 172, batch_size: int = 256,
+                 temperature_range: Iterable[float]=None, monitor_epochs: int = 1, reconstruction_epochs: int = 5,
+                 sample_reconstruction: bool = False, traj_file: str = None, traj_sr: int = 172, batch_size: int = 128,
                  generate_after_n_epochs: int = 0):
         """
         Callback for audio reconstruction monitoring.
@@ -169,7 +169,7 @@ class AudioReconstructionMonitor(Callback):
                 x = x.mean
             x = check_mono(dataset.invert_transform(x), normalize=True)
             torchaudio.save(f"{path}/{traj_name}.wav", x, sample_rate = dataset.sr or 44100)
-            
+
     def on_validation_epoch_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         with torch.no_grad():
             if trainer.state.stage == RunningStage.SANITY_CHECKING:
@@ -226,4 +226,3 @@ class AudioReconstructionMonitor(Callback):
                         print('[Warning] trajectory file missing : %s'%self.traj_file)
                     else:
                         self.generate_trajectories(dataset, model, trainer.log_dir)
-
