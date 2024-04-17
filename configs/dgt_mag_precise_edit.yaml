@@ -38,8 +38,8 @@ data:
       dynamics:
         name: read_single_metadata
         type: int
-    #flatten: -2
-    min_length: 8192
+    flatten: 0
+    min_length: 1024
     # sequence:
     #   length: 1
     #   mode: random
