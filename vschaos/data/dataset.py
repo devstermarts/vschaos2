@@ -102,7 +102,7 @@ class AudioDataset(Dataset):
             try:
                 transforms = torch.jit.script(transforms)
             except Exception as e:
-                print("Error occurred when scripting audio transorm : %s"%e)
+                print("Error occurred when scripting audio transform : %s"%e)
     def _gettransform(self):
         return self._transforms
     def _deltransform(self):
