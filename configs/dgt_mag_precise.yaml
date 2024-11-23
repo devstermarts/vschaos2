@@ -16,13 +16,13 @@ defaults:
 
 data:
   module: AudioDataModule
-  transforms: 
+  transforms:
     name: dgt-8192-mag
     pre_transforms:
       - {type: Mono, args: {squeeze: 1}}
       - {type: DGT, args: {n_fft: &n_fft 8192, hop_length: 2048}}
       - {type: Magnitude, args: {contrast: log1p, n_fft: *n_fft, mel: 0, mode: unipolar}}
-    transforms: 
+    transforms:
       - {type: Unsqueeze, args: {dim: -2}}
   augmentations:
     - {type: Shift, args: {prob: 0.3}}
@@ -61,7 +61,7 @@ model:
       dilation: [1,1,1,1]
       stride: [8,4,4,2]
       kernel_size: [11,13,15,17]
-      nnlin: SiLU 
+      nnlin: SiLU
       bias: True
       target_dist: Normal
       norm: batch
@@ -78,32 +78,31 @@ model:
       # target_dist: Normal
       final_conv: 1
       out_nnlin: Softplus
-      bias: True 
-  training: 
+      bias: True
+  training:
     beta: 1.0
     beta_schedule_type: batch
-    reconstruction: 
+    reconstruction:
       type: SpectralConvergence
       # type: MSE
     regularization:
-      type: KLD 
-      args: 
+      type: KLD
+      args:
         free_bits: 10
-    optimizer: 
+    optimizer:
       type: Adam
       args:
         lr: 1.e-4
     warmup: 500000
 
-callbacks: 
+callbacks:
 - { type: ModelCheckpoint, args: {filename: "${hydra:job.name}", save_last: True, every_n_epochs: 1, epoch_schedule: [1, 5, 10, 50, 100, 500], monitor: rec_loss/valid}}
 - { type: LearningRateMonitor, args: {logging_interval: "epoch"} }
 - { type: DissectionMonitor, args: {monitor_epochs: 5, embedding_epochs: 10, n_batches: 20, batch_size: 64} }
-- { type: AudioReconstructionMonitor, args: {reconstruction_epochs: 1, monitor_epochs: 1, plot_reconstructions: 1, plot_samples: 1, generate_files: 1, generate_trajs: 0}}
+- { type: AudioReconstructionMonitor, args: {reconstruction_epochs: 1, monitor_epochs: 1, plot_reconstructions: 1, plot_samples: 1, generate_files: 0, generate_trajs: 0}}
 
 
 pl_trainer:
   max_epochs: 10000
   # limit_train_batches: 1
   # limit_val_batches: 1
-
